@@ -1,7 +1,7 @@
 """
 THIS LIBRARY IS FOR SHARING DATA BETWEEN TWO OR MORE THAN
-TWO SCRIPTS WITH <<SQL>> DATABASE,
-BUT YOU CAN USE <<pybridge>> AS A SIMPLE DATABASE LIBRARY
+TWO SCRIPTS WITH <<SQLLite>> DATABASE,
+BUT YOU CAN USE <<SQL-bridge>> AS A SIMPLE DATABASE LIBRARY
 """
 #::::::::::::::::::::::::::::::::::::::::::::::::::::
 import os
@@ -13,7 +13,7 @@ class bridge:
 
     def __init__(self, bridge_name, bridge_path):  # SETUP BRIDGE AND MAIN CLASS
 
-        self.bridge_name = bridge_name  # OUR BRIDGE NAME
+        self.bridge_name = bridge_name  # YOUR BRIDGE NAME
         self.bridge_path = bridge_path  # PATH TO BRIDGE DIRACTORY
 
         self.new_event = []
@@ -21,7 +21,7 @@ class bridge:
 
         if os.path.exists(f"{self.bridge_path}"):
 
-            self.dat = connect(f"{self.bridge_path}\\{self.bridge_name}.db")
+            self.dat = connect(os.path.join(self.bridge_path, self.bridge_name))
             self.manager = self.dat.cursor()
 
             self.manager.execute(
