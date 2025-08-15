@@ -1,19 +1,20 @@
 """
 THIS LIBRARY IS FOR SHARING DATA BETWEEN TWO OR MORE THAN
-TWO SCRIPTS WITH <<SQLLite>> DATABASE,
+TWO SCRIPTS WITH <<SQLite>> DATABASE,
 BUT YOU CAN USE <<SQL-bridge>> AS A SIMPLE DATABASE LIBRARY
 """
 #::::::::::::::::::::::::::::::::::::::::::::::::::::
 import os
 from sqlite3 import connect
+import Error
 
 
 class bridge:
     """MAIN CLASS FOR SEND, SETUP AND RECEIVING"""
 
-    def __init__(self, bridge_name, bridge_path):  # SETUP BRIDGE AND MAIN CLASS
+    def __init__(self, bridge_name: str, bridge_path):  # SETUP BRIDGE AND MAIN CLASS
 
-        self.bridge_name = bridge_name  # YOUR BRIDGE NAME
+        self.bridge_name = bridge_name + '.db'  # YOUR BRIDGE NAME
         self.bridge_path = bridge_path  # PATH TO BRIDGE DIRACTORY
 
         self.new_event = []
@@ -225,11 +226,19 @@ class bridge:
                 data = data2
 
                 return self.new_event, self.event_list
+            
+    def new_table(self, name:str, columns: list = ['data']): # CREATE A NEW TABLE
+        try:
+            self.manager.execute(
+                f"CREATE TABLE {name} (id INTEGER PRIMARY KEY AUTOINCREMENT, {', '.join([f'{col} TEXT' for col in columns])})")
+        except :
+            Error.Error('Table has been created.')
 
 
 """
-THIS PACAKGE IS DEVELOPED BY <<MRT>> => (MOHAMMAD REZA TAGHDIRI) A PERSIAN PROGRAMER.
+THIS PACAKGE IS DEVELOPED BY <<bit.line.group>> => (MOHAMMAD REZA TAGHDIRI, PARSHAN MAZAHERI) PERSIAN PROGRAMERS.
 
-I HOPE THAT <<pybridge>> MAKE SOME WORKS EASIER FOR YOU....
+I HOPE THAT <<SQL-bridge>> MAKE SOME WORKS EASIER FOR YOU....
 
+                                                    IRAN
 """
