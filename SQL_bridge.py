@@ -12,10 +12,10 @@ import Error
 class bridge:
     """MAIN CLASS FOR SEND, SETUP AND RECEIVING"""
 
-    def __init__(self, bridge_name: str, bridge_path):  # SETUP BRIDGE AND MAIN CLASS
+    def __init__(self, bridge_name: str, bridge_path: str = os.getcwd()):  # SETUP BRIDGE AND MAIN CLASS
 
-        self.bridge_name = bridge_name + '.db'  # YOUR BRIDGE NAME
-        self.bridge_path = bridge_path  # PATH TO BRIDGE DIRACTORY
+        self.bridge_name = bridge_name + '.db' if '.db' not in bridge_name else bridge_name  # YOUR BRIDGE NAME
+        self.bridge_path = bridge_path # PATH TO BRIDGE DIRACTORY
 
         self.new_event = []
         self.event_list = []
@@ -227,10 +227,10 @@ class bridge:
 
                 return self.new_event, self.event_list
             
-    def new_table(self, name:str, columns: list = ['data']): # CREATE A NEW TABLE
+    def new_table(self, name:str, columns: list = ['data'], AUTOINCREMENT: bool = True): # CREATE A NEW TABLE
         try:
             self.manager.execute(
-                f"CREATE TABLE {name} (id INTEGER PRIMARY KEY AUTOINCREMENT, {', '.join([f'{col} TEXT' for col in columns])})")
+                f"CREATE TABLE {name} (id INTEGER PRIMARY KEY {'AUTOINCREMENT' if AUTOINCREMENT else ''}, {', '.join([f'{col} TEXT' for col in columns])})")
         except :
             Error.Error('Table has been created.')
 
